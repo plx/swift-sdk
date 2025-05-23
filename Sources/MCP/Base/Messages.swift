@@ -158,9 +158,9 @@ class RequestHandlerBox: @unchecked Sendable {
 
 /// A typed request handler that can be used to handle requests of a specific type
 final class TypedRequestHandler<M: Method>: RequestHandlerBox, @unchecked Sendable {
-    private let _handle: @Sendable (Request<M>) async throws -> Response<M>
+    private let _handle: (Request<M>) async throws -> Response<M>
 
-    init(_ handler: @escaping @Sendable (Request<M>) async throws -> Response<M>) {
+    init(_ handler: sending @escaping (Request<M>) async throws -> Response<M>) {
         self._handle = handler
         super.init()
     }
@@ -381,9 +381,9 @@ class NotificationHandlerBox: @unchecked Sendable {
 final class TypedNotificationHandler<N: Notification>: NotificationHandlerBox,
     @unchecked Sendable
 {
-    private let _handle: @Sendable (Message<N>) async throws -> Void
+    private let _handle: (Message<N>) async throws -> Void
 
-    init(_ handler: @escaping @Sendable (Message<N>) async throws -> Void) {
+    init(_ handler: sending @escaping (Message<N>) async throws -> Void) {
         self._handle = handler
         super.init()
     }
